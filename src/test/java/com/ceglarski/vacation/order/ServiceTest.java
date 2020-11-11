@@ -21,17 +21,17 @@ public class ServiceTest {
     }
 
     @Test
-    void shouldRejectedWhenDateNotAvailable() {
+    void shouldDateNotAvailableWhenDateNotAvailable() {
 
         VacationOrder vacationOrder = VacationOrder.builder()
-                .employee("Oskar").status(OrderState.CREATED.name()).name("shouldRejectedWhenDateNotAvailable").dateAvailable(false)
+                .employee("Oskar").status(OrderState.CREATED.name()).name("shouldDateNotAvailableWhenDateNotAvailable").dateAvailable(false)
                 .build();
 
         //when
         VacationOrder result = service.create(vacationOrder);
 
         //then
-        assertEquals(OrderState.REJECTED.name(), result.getStatus());
+        assertEquals(OrderState.DATE_NOT_AVAILABLE.name(), result.getStatus());
         System.out.println(result.toString());
     }
 

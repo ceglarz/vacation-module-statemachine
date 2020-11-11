@@ -1,9 +1,8 @@
 package com.ceglarski.vacation.order;
 
-import com.ceglarski.vacation.order.action.SendNotificationAccepted;
 import com.ceglarski.vacation.order.action.SendQuestion;
 import com.ceglarski.vacation.order.action.SaveSupervisors;
-import com.ceglarski.vacation.order.action.SendNotificationRejected;
+import com.ceglarski.vacation.order.action.SendNotification;
 import com.ceglarski.vacation.order.event.OrderEvent;
 import com.ceglarski.vacation.order.guard.DoesLeaderAccepted;
 import com.ceglarski.vacation.order.guard.DoesManagerAccepted;
@@ -25,7 +24,7 @@ class VacationStateMachineBuilder {
                 .initial(OrderState.CREATED)
                 .choice(OrderState.IS_DATE_AVAILABLE)
                 .state(OrderState.DATE_AVAILABLE)
-                .state(OrderState.DATE_NOT_AVAILABLE)
+                .state(OrderState.DATE_NOT_AVAILABLE, sendNotification(OrderState.DATE_NOT_AVAILABLE))
                 .state(OrderState.SAVED_SUPERVISORS)
                 .state(OrderState.ASK_LEADER)
                 .state(OrderState.LEADER_WAS_ASKED)
@@ -33,8 +32,9 @@ class VacationStateMachineBuilder {
                 .state(OrderState.ASK_MANAGER)
                 .state(OrderState.MANAGER_WAS_ASKED)
                 .choice(OrderState.DOES_MANAGER_ACCEPTED)
-                .state(OrderState.REJECTED, sendNotificationRejected())
-                .state(OrderState.ACCEPTED, sendNotificationAccepted())
+                .state(OrderState.REJECTED, sendNotification(OrderState.REJECTED))
+                .state(OrderState.ACCEPTED, sendNotification(OrderState.ACCEPTED))
+                .end(OrderState.DATE_NOT_AVAILABLE)
                 .end(OrderState.REJECTED)
                 .end(OrderState.ACCEPTED);
 
@@ -52,8 +52,8 @@ class VacationStateMachineBuilder {
                 .withLocal().source(OrderState.DATE_AVAILABLE).target(OrderState.SAVED_SUPERVISORS)
                 .action(saveSupervisors())
                 .and()
-                .withLocal().source(OrderState.DATE_NOT_AVAILABLE).target(OrderState.REJECTED)
-                .and()
+//                .withLocal().source(OrderState.DATE_NOT_AVAILABLE).target(OrderState.REJECTED)
+//                .and()
                 .withLocal().source(OrderState.SAVED_SUPERVISORS).target(OrderState.ASK_LEADER)
                 .and()
                 .withLocal().source(OrderState.ASK_LEADER).target(OrderState.LEADER_WAS_ASKED)
@@ -95,13 +95,8 @@ class VacationStateMachineBuilder {
     }
 
     @Bean
-    private SendNotificationAccepted sendNotificationAccepted() {
-        return new SendNotificationAccepted();
-    }
-
-    @Bean
-    private SendNotificationRejected sendNotificationRejected() {
-        return new SendNotificationRejected();
+    private SendNotification sendNotification(OrderState state) {
+        return new SendNotification(state);
     }
 
     @Bean

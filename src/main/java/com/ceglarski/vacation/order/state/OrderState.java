@@ -1,0 +1,19 @@
+package com.ceglarski.vacation.order.state;
+
+public enum OrderState {
+    CREATED,
+    IS_DATE_AVAILABLE,
+    DATE_AVAILABLE,
+    DATE_NOT_AVAILABLE,
+
+    SAVED_SUPERVISORS,
+    ASK_LEADER,
+    LEADER_WAS_ASKED,
+    DOES_LEADER_ACCEPTED,
+    ASK_MANAGER,
+    MANAGER_WAS_ASKED,
+    DOES_MANAGER_ACCEPTED,
+
+    REJECTED,
+    ACCEPTED
+}

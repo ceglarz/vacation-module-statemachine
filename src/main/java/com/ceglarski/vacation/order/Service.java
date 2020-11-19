@@ -31,6 +31,10 @@ class Service {
         }
     }
 
+    VacationOrder read(Integer vacationOrderId) {
+        return repository.get(vacationOrderId);
+    }
+
     VacationOrder create(VacationOrder vacationOrder) {
         vacationOrder.setStatus(OrderState.CREATED.name());
         VacationOrder createdVacationOrder = repository.create(vacationOrder);
@@ -51,7 +55,6 @@ class Service {
 
     private void saveVariables(StateMachine<OrderState, OrderEvent> stateMachine, VacationOrder vacationOrder) {
         Map<String, Object> vacationOrderMap = objectMapper.convertValue(vacationOrder, Map.class);
-        System.out.println(vacationOrderMap);
         stateMachine.getExtendedState().getVariables().putAll(vacationOrderMap);
     }
 

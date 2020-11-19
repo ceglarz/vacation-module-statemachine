@@ -52,8 +52,6 @@ class VacationStateMachineBuilder {
                 .withLocal().source(OrderState.DATE_AVAILABLE).target(OrderState.SAVED_SUPERVISORS)
                 .action(saveSupervisors())
                 .and()
-//                .withLocal().source(OrderState.DATE_NOT_AVAILABLE).target(OrderState.REJECTED)
-//                .and()
                 .withLocal().source(OrderState.SAVED_SUPERVISORS).target(OrderState.ASK_LEADER)
                 .and()
                 .withLocal().source(OrderState.ASK_LEADER).target(OrderState.LEADER_WAS_ASKED)

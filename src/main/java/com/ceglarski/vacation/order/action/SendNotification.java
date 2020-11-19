@@ -26,7 +26,7 @@ public class SendNotification implements Action<OrderState, OrderEvent> {
             log.info("\u001B[35m" +
                     "Send notification to employee - " + employee + "\n" +
                     "Your vacation request has been rejected :( \n" +
-                    "State - " + context.getSource().getId() + "\n" +
+                    "State - " + state.name() + "\n" +
                     "Last event - " + context.getEvent().name() +
                     "\u001B[0m");
         }

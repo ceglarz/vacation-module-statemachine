@@ -15,6 +15,6 @@ public class StateMachineListener extends StateMachineListenerAdapter {
 
     @Override
     public void stateEntered(State state) {
-        log.info(String.format("State: %s", state.getId()));
+        log.info("State: " + state.getId());
     }
 }

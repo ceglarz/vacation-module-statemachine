@@ -1,18 +1,22 @@
 package com.ceglarski.vacation.order;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequiredArgsConstructor
 public class Controller {
 
     private final Service service;
+
+    @GetMapping("api/vacation/{id}")
+    public VacationOrder read(@PathVariable("id") Integer id) {
+        return service.read(id);
+    }
 
     @PostMapping("api/vacation")
     public VacationOrder create(@RequestBody VacationOrder vacationOrder) {

@@ -1,6 +1,5 @@
 package com.ceglarski.vacation.order;
 
-import com.ceglarski.vacation.order.state.OrderState;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -20,6 +19,9 @@ class Repository {
     }
 
     VacationOrder get(Integer vacationOrderId) {
+        if (!vacationOrderMap.containsKey(vacationOrderId)) {
+            throw new RuntimeException("Cannot find VacationOrder with id: " + vacationOrderId);
+        }
         return vacationOrderMap.get(vacationOrderId);
     }
 

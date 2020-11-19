@@ -9,6 +9,7 @@ public class DoesManagerAccepted implements Guard<OrderState, OrderEvent> {
 
     @Override
     public boolean evaluate(StateContext<OrderState, OrderEvent> context) {
-        return true;
+
+        return GuardHelper.doesSupervisorAccepted(context);
     }
 }

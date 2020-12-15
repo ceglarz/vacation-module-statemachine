@@ -4,13 +4,17 @@ import com.ceglarski.vacation.order.event.OrderEvent;
 import com.ceglarski.vacation.order.state.OrderState;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Log
+@TestMethodOrder(OrderAnnotation.class)
 class ServiceTest {
 
     private Repository repository;
@@ -23,6 +27,7 @@ class ServiceTest {
     }
 
     @Test
+    @Order(1)
     void shouldDateNotAvailableWhenDateNotAvailable() {
 
         VacationOrder vacationOrder = VacationOrder.builder()
@@ -38,6 +43,7 @@ class ServiceTest {
     }
 
     @Test
+    @Order(2)
     void shouldAskLeaderWhenDateAvailable() {
 
         VacationOrder vacationOrder = VacationOrder.builder()
@@ -53,6 +59,7 @@ class ServiceTest {
     }
 
     @Test
+    @Order(3)
     void shouldAskManagerWhenLeaderDidAccept() {
 
         VacationOrder vacationOrder = VacationOrder.builder()
@@ -73,6 +80,7 @@ class ServiceTest {
     }
 
     @Test
+    @Order(4)
     void shouldRejectedWhenLeaderDidNotAccept() {
 
         VacationOrder vacationOrder = VacationOrder.builder()
@@ -93,6 +101,7 @@ class ServiceTest {
     }
 
     @Test
+    @Order(5)
     void shouldAcceptedWhenManagerDidAccept() {
 
         VacationOrder vacationOrder = VacationOrder.builder()
